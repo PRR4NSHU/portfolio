@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // Localhost (Testing ke liye):
-const API_URL = "http://localhost:5000/api/contact";
+const API_URL = "https://portfolio-wtm0.onrender.com/api;
 
 // Live (Render) ke liye (Deploy karte waqt upar wala comment karein aur niche wala uncomment karein):
 // const API_URL = "https://your-portfolio-backend.onrender.com/api/contact";
@@ -193,4 +193,5 @@ if (toggleBtn) {
             toggleBtn.classList.replace('fa-moon', 'fa-sun');
         }
     });
+
 }
