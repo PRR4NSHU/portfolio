@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prranshu | CS Engineer & Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav id="navbar">
+    <div class="container nav-content">
+
+        <div class="logo">&lt;Prranshu/&gt;</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <!-- 🌙 THEME TOGGLE (SEPARATE) -->
+        <div class="theme-switch-wrapper">
+            <i class="fas fa-moon" id="theme-toggle" title="Switch Theme"></i>
+        </div>
+
+        <!-- ☰ MOBILE MENU -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+    </div>
+</nav>
+
+
+
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h2 class="hello-tag">Hello, I'm</h2>
+            <h1>Prranshu Saraswat</h1>
+            <h3 class="typing-text">I am a <span class="txt-type" data-wait="3000"
+                    data-words='["Computer Science Engineer", "Full Stack Web Developer", "Java Developer", "Problem Solver"]'></span>|
+            </h3>
+            <p>B.Tech CSE Graduate passionate about building scalable web applications and robust backend systems using
+                Java and MERN Stack.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
+                <a href="https://www.dropbox.com/scl/fi/scgh3r1edzcj81p1les2q/PrranshuSaraswat_CSE_GLAU.docx?rlkey=tgqxl56mogmwfgaj25h94fpbz&st=dm7k7jl8&dl=0"
+                    target="_blank" class="btn btn-outline"><i class="fas fa-download"></i> Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-wrapper">
+                <div class="about-img">
+                    <img src="images/profile.jpg" alt="Prranshu Saraswat">
+                </div>
+                <div class="about-text">
+                    <h3>Engineering Logic meets Creative Development.</h3>
+                    <p>
+                        I am a Computer Science Engineer (B.Tech) with a strong foundation in data structures,
+                        algorithms, and software design patterns. My journey started with core Java, and my curiosity
+                        led me to master the full web development stack.
+                    </p>
+                    <p>
+                        I enjoy bridging the gap between complex backend logic and user-friendly frontend interfaces.
+                        Whether it's optimizing a database query in Java or creating a responsive UI with React, I love
+                        the challenge of creating efficient software.
+                    </p>
+                    <div class="about-details">
+                        <div class="detail-item"><i class="fas fa-graduation-cap"></i> <strong>Degree:</strong> B.Tech
+                            CSE</div>
+                        <div class="detail-item"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong>
+                            Mathura, UP, India</div>
+                        <div class="detail-item"><i class="fas fa-envelope"></i> <strong>Email:</strong>
+                            priyanshu001sh@gmail.com</div>
+                        <div class="detail-item"><i class="fas fa-briefcase"></i> <strong>Status:</strong> Open to Work
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <p class="section-subtitle">My toolbox for bringing ideas to life.</p>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fab fa-java"></i>
+                        <h3>Java & Backend Ecosystem</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span>Core Java</span>
+                        <span>Spring Boot</span>
+                        <span>Hibernate/JPA</span>
+                        <span>Microservices</span>
+                        <span>RESTful APIs</span>
+                        <span>MySQL/PostgreSQL</span>
+                        <span>Maven</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fab fa-react"></i>
+                        <h3>Web Development (Full Stack)</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span>HTML5 & CSS3</span>
+                        <span>JavaScript (ES6+)</span>
+                        <span>React.js</span>
+                        <span>Node.js & Express</span>
+                        <span>MongoDB</span>
+                        <span>Tailwind CSS</span>
+                        <span>Git & GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Some of my recent work reflecting my skills.</p>
+
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="images/advocate.png" alt="Advocate Management System">
+                    </div>
+                    <div class="project-info">
+                        <h3>Advocate Portfolio & Management</h3>
+                        <p>A full-stack solution for legal professionals. Features include appointment booking with UPI
+                            payment integration, an admin dashboard for case management, and status tracking for
+                            clients.</p>
+                        <div class="tech-stack">
+                            <span>Node.js</span>
+                            <span>Express</span>
+                            <span>MongoDB</span>
+                            <span>Vanilla JS</span>
+                            <span>Payment Gateway</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/PRR4NSHU" target="_blank" class="btn-link"><i
+                                    class="fab fa-github"></i> Code</a>
+                            <a href="https://sharmaadvocate.netlify.app/" class="btn-link"><i
+                                    class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://cdn.dribbble.com/userupload/15082777/file/original-70822f62753423143f4b3616a155d7fc.png?format=webp&resize=400x300&vertical=center"
+                            alt="Task Manager App">
+                    </div>
+                    <div class="project-info">
+                        <h3>Task Master - Productivity App</h3>
+                        <p>A MERN stack application for managing daily tasks. Implements CRUD operations, authentication
+                            (JWT), drag-and-drop functionality, and real-time updates.</p>
+                        <div class="tech-stack">
+                            <span>React.js</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                            <span>Redux</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/PRR4NSHU" target="_blank" class="btn-link"><i
+                                    class="fab fa-github"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Achievements & Certifications</h2>
+            <div class="achievement-grid">
+                <div class="ach-card">
+                    <i class="fas fa-trophy ach-icon"></i>
+                    <h4>Smart India Hackathon Participant</h4>
+                    <p>Contributed to developing innovative solutions for real-world problems.</p>
+                </div>
+                <div class="ach-card">
+                    <i class="fas fa-certificate ach-icon"></i>
+                    <h4>Java Full Stack Certification</h4>
+                    <p>Completed intensive training in Core Java, JDBC, Servlets, and Spring Framework.</p>
+                </div>
+                <div class="ach-card">
+                    <i class="fas fa-code-branch ach-icon"></i>
+                    <h4>3 Star Coder (Java)</h4>
+                    <p>Achieved 3-star rating on HackerRank for problem-solving and algorithms.</p>
+                </div>
+                <div class="ach-card">
+                    <i class="fas fa-university ach-icon"></i>
+                    <h4>B.Tech CSE Graduate</h4>
+                    <p>Completed Engineering degree with focus on Software Development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Have a project in mind or just want to say hi? Feel free to drop a message!</p>
+
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email</h4>
+                        <p>priyanshu001sh@gmail.com</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-linkedin"></i>
+                        <h4>LinkedIn</h4>
+                        <p><a href="https://www.linkedin.com/in/prranshu-saraswat">Connect on LinkedIn</a></p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-github"></i>
+                        <h4>GitHub</h4>
+                        <p><a href="https://github.com/PRR4NSHU">github.com/PRR4NSHU</a></p>
+                    </div>
+                </div>
+
+                <form class="contact-form" onsubmit="submitContact(event)">
+                    <div class="form-group">
+                        <input type="text" id="cName" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="cEmail" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="cSubject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="cMessage" rows="5" placeholder="Message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary send-btn" id="submitBtn">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+
+                    <p id="formStatus" style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Designed & Built by <strong style="color: var(--primary);">Prranshu Saraswat</strong> | © 2024</p>
+            <div class="social-links-footer">
+                <a href="https://www.linkedin.com/in/prranshu-saraswat"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/PRR4NSHU"><i class="fab fa-github"></i></a>
+                <a href="mailto:priyanshu001sh@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
