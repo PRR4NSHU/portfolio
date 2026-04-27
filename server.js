@@ -62,7 +62,7 @@ app.post('/api/contact', async (req, res) => {
 // 3. MAIN FIX: Wildcard Route (Ye hamesha sabse niche hona chahiye)
 // Jab koi API route match nahi hoga, tabhi ye index.html serve karega
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ---------------- START SERVER ----------------
