@@ -1,21 +1,23 @@
 // ---------------- CONFIGURATION ----------------
 require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path'); // Standard path module added
 
 // ---------------- APP INIT ----------------
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ---------------- MIDDLEWARE ----------------
-app.use(cors({ origin: '*' })); // Allow all origins
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
+// 1. Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 // ---------------- DATABASE CONNECTION ----------------
-// .env file me MONGO_URI jaroor dalein
 const dbUri = process.env.MONGO_URI;
 
 mongoose.connect(dbUri)
@@ -35,29 +37,29 @@ const Contact = mongoose.model('Contact', ContactSchema);
 
 // ---------------- API ROUTES ----------------
 
-// 1. Save Contact Message
+// 1. Backend Status Route (New: To see your message)
+app.get('/api/status', (req, res) => {
+    res.send("Portfolio Backend is Running 🚀");
+});
+
+// 2. Save Contact Message
 app.post('/api/contact', async (req, res) => {
     try {
         const { name, email, subject, message } = req.body;
-
-        // Validation
         if (!name || !email || !message) {
             return res.status(400).json({ success: false, error: "Please fill all required fields." });
         }
 
-        // Save to DB
-        const newContact = await Contact.create({ name, email, subject, message });
-        
-        console.log("📩 New Message form:", name);
+        await Contact.create({ name, email, subject, message });
+        console.log("📩 New Message from:", name);
         res.status(201).json({ success: true, message: "Message Sent Successfully!" });
-
     } catch (err) {
         console.error("Server Error:", err);
         res.status(500).json({ success: false, error: "Server Error. Please try again later." });
     }
 });
 
-// 2. Test Route
+// 3. Catch-all Route (Serves the Frontend index.html)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -65,4 +67,5 @@ app.get('*', (req, res) => {
 // ---------------- START SERVER ----------------
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on Port: ${PORT}`);
+    console.log(`🔗 Check status at: http://localhost:${PORT}/api/status`);
 });
