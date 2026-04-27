@@ -58,8 +58,8 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // 2. Test Route
-app.get('/', (req, res) => {
-    res.send("Portfolio Backend is Running 🚀");
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ---------------- START SERVER ----------------
