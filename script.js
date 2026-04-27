@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // Localhost (Testing ke liye):
-const API_URL = "https://portfolio-mu-puce-qoi22dvyln.vercel.app";
+const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
 // Live (Render) ke liye (Deploy karte waqt upar wala comment karein aur niche wala uncomment karein):
 // const API_URL = "https://your-portfolio-backend.onrender.com/api/contact";
