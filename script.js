@@ -1,197 +1,179 @@
-// --- CONFIGURATION ---
-// Localhost (Testing ke liye):
-const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+// ---------------- CONFIGURATION ----------------
+/**
+ * Automatically detects if you are working locally or on live.
+ * Replace 'your-app-name.onrender.com' with your actual Render URL.
+ */
+const BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000"
+    : "https://your-portfolio-backend.onrender.com"; // <--- Put your Render URL here
 
-// Live (Render) ke liye (Deploy karte waqt upar wala comment karein aur niche wala uncomment karein):
-// const API_URL = "https://your-portfolio-backend.onrender.com/api/contact";
+const API_URL = `${BASE_URL}/api/contact`;
 
-
-// --- TYPING EFFECT LOGIC ---
-const TypeWriter = function(txtElement, words, wait = 3000) {
-    this.txtElement = txtElement;
-    this.words = words;
-    this.txt = '';
-    this.wordIndex = 0;
-    this.wait = parseInt(wait, 10);
-    this.type();
-    this.isDeleting = false;
-}
-
-TypeWriter.prototype.type = function() {
-    const current = this.wordIndex % this.words.length;
-    const fullTxt = this.words[current];
-
-    if(this.isDeleting) {
-        this.txt = fullTxt.substring(0, this.txt.length - 1);
-    } else {
-        this.txt = fullTxt.substring(0, this.txt.length + 1);
-    }
-
-    this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
-
-    let typeSpeed = 100;
-
-    if(this.isDeleting) {
-        typeSpeed /= 2;
-    }
-
-    if(!this.isDeleting && this.txt === fullTxt) {
-        typeSpeed = this.wait;
-        this.isDeleting = true;
-    } else if(this.isDeleting && this.txt === '') {
+// ---------------- TYPING EFFECT (Refactored to Class) ----------------
+class TypeWriter {
+    constructor(txtElement, words, wait = 3000) {
+        this.txtElement = txtElement;
+        this.words = words;
+        this.txt = '';
+        this.wordIndex = 0;
+        this.wait = parseInt(wait, 10);
         this.isDeleting = false;
-        this.wordIndex++;
-        typeSpeed = 500;
+        this.type();
     }
 
-    setTimeout(() => this.type(), typeSpeed);
+    type() {
+        const current = this.wordIndex % this.words.length;
+        const fullTxt = this.words[current];
+
+        // Update text state
+        this.txt = this.isDeleting 
+            ? fullTxt.substring(0, this.txt.length - 1) 
+            : fullTxt.substring(0, this.txt.length + 1);
+
+        this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
+
+        let typeSpeed = this.isDeleting ? 50 : 100;
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            typeSpeed = this.wait;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.wordIndex++;
+            typeSpeed = 500;
+        }
+
+        setTimeout(() => this.type(), typeSpeed);
+    }
 }
 
-// Init On DOM Load
-document.addEventListener('DOMContentLoaded', init);
-
-function init() {
+// ---------------- INITIALIZATION ----------------
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Init Typewriter
     const txtElement = document.querySelector('.txt-type');
-    if(txtElement) {
+    if (txtElement) {
         const words = JSON.parse(txtElement.getAttribute('data-words'));
         const wait = txtElement.getAttribute('data-wait');
         new TypeWriter(txtElement, words, wait);
     }
-}
 
+    // 2. Init Theme
+    initTheme();
+});
 
-// --- MOBILE NAVIGATION TOGGLE ---
+// ---------------- MOBILE NAVIGATION ----------------
 const mobileMenu = document.getElementById('mobile-menu');
 const navLinks = document.getElementById('navLinks');
 
-if (mobileMenu) {
-    mobileMenu.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenu.classList.toggle('is-active');
+const toggleMenu = () => {
+    navLinks?.classList.toggle('active');
+    mobileMenu?.classList.toggle('is-active');
+};
+
+mobileMenu?.addEventListener('click', toggleMenu);
+
+navLinks?.querySelectorAll('li a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileMenu?.classList.remove('is-active');
     });
-}
+});
 
-// Close mobile menu when a link is clicked
-if (navLinks) {
-    navLinks.querySelectorAll('li a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            if (mobileMenu) mobileMenu.classList.remove('is-active');
-        });
-    });
-}
-
-
-// --- ACTIVE SCROLL SPY (Fixed Duplicate Code) ---
-const sections = document.querySelectorAll("section");
-const navLi = document.querySelectorAll(".nav-links li a");
-
+// ---------------- SCROLL SPY ----------------
 window.addEventListener("scroll", () => {
+    const sections = document.querySelectorAll("section");
+    const navLi = document.querySelectorAll(".nav-links li a");
     let current = "";
 
-    sections.forEach((section) => {
+    sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        // -150px ka offset taaki header ke niche aate hi active ho jaye
-        if (window.scrollY >= (sectionTop - 150)) {
+        if (pageYOffset >= (sectionTop - 150)) {
             current = section.getAttribute("id");
         }
     });
 
-    navLi.forEach((a) => {
-        a.classList.remove("active");
-        // Agar href link section id se match kare
-        if (a.getAttribute("href").includes(current)) {
-            a.classList.add("active");
-        }
+    navLi.forEach(a => {
+        a.classList.toggle("active", a.getAttribute("href").includes(current));
     });
 });
 
-
-// --- CONTACT FORM LOGIC ---
+// ---------------- CONTACT FORM ----------------
 async function submitContact(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
-    const name = document.getElementById('cName').value;
-    const email = document.getElementById('cEmail').value;
-    const subject = document.getElementById('cSubject').value;
-    const message = document.getElementById('cMessage').value;
-    const statusTxt = document.getElementById('formStatus');
-    const btn = document.getElementById('submitBtn');
+    const elements = {
+        name: document.getElementById('cName'),
+        email: document.getElementById('cEmail'),
+        subject: document.getElementById('cSubject'),
+        message: document.getElementById('cMessage'),
+        status: document.getElementById('formStatus'),
+        btn: document.getElementById('submitBtn')
+    };
 
-    // Validation (Backend bhejne se pehle check)
-    if(!name || !email || !message) {
-        statusTxt.style.color = "red";
-        statusTxt.innerText = "⚠️ Please fill all required fields.";
+    if (!elements.name.value || !elements.email.value || !elements.message.value) {
+        updateStatus(elements.status, "⚠️ Please fill required fields.", "red");
         return;
     }
 
-    // Button loading state
-    btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
-    btn.disabled = true;
-
-    const data = { name, email, subject, message };
+    // Loading State
+    elements.btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+    elements.btn.disabled = true;
 
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                name: elements.name.value,
+                email: elements.email.value,
+                subject: elements.subject.value,
+                message: elements.message.value
+            })
         });
 
         const result = await response.json();
 
         if (response.ok) {
-            statusTxt.style.color = "green";
-            statusTxt.innerText = "✅ Message Sent Successfully!";
+            updateStatus(elements.status, "✅ Message Sent Successfully!", "green");
             document.querySelector('.contact-form').reset();
         } else {
-            statusTxt.style.color = "red";
-            statusTxt.innerText = "❌ Error: " + (result.error || "Failed to send.");
+            throw new Error(result.error || "Failed to send.");
         }
-
     } catch (error) {
-        console.error("Error:", error);
-        statusTxt.style.color = "red";
-        statusTxt.innerText = "❌ Server Connection Failed! (Is backend running?)";
+        updateStatus(elements.status, `❌ ${error.message}`, "red");
     } finally {
-        // Button reset state
-        btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
-        btn.disabled = false;
-
-        // 5 second baad status message hata do
-        setTimeout(() => {
-            if(statusTxt) statusTxt.innerText = "";
-        }, 5000);
+        elements.btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+        elements.btn.disabled = false;
     }
 }
 
-// --- THEME SWITCHER LOGIC ---
-
-const toggleBtn = document.getElementById('theme-toggle');
-const htmlElement = document.documentElement;
-
-// 1. Check Local Storage on Load (Page khulte hi check karega)
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    htmlElement.setAttribute('data-theme', 'dark');
-    toggleBtn.classList.replace('fa-moon', 'fa-sun'); // Icon Change
+function updateStatus(el, msg, color) {
+    el.style.color = color;
+    el.innerText = msg;
+    setTimeout(() => el.innerText = "", 5000);
 }
 
-// 2. Toggle Event Listener (Click karne par)
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-        // Agar abhi Dark hai to Light kar do
-        if (htmlElement.getAttribute('data-theme') === 'dark') {
-            htmlElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-            toggleBtn.classList.replace('fa-sun', 'fa-moon');
-        } 
-        // Agar Light hai to Dark kar do
-        else {
-            htmlElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            toggleBtn.classList.replace('fa-moon', 'fa-sun');
-        }
-    });
+// ---------------- THEME SWITCHER ----------------
+function initTheme() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
 
+    const setTheme = (theme) => {
+        if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            toggleBtn?.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            html.removeAttribute('data-theme');
+            toggleBtn?.classList.replace('fa-sun', 'fa-moon');
+        }
+        localStorage.setItem('theme', theme);
+    };
+
+    setTheme(savedTheme);
+
+    toggleBtn?.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(currentTheme);
+    });
 }
