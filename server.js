@@ -4,17 +4,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path'); // Standard path module added
+const path = require('path'); 
 
 // ---------------- APP INIT ----------------
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ---------------- MIDDLEWARE ----------------
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: '*' })); 
 app.use(bodyParser.json());
 
-// 1. Serve static files from the "public" directory
+// 1. Static Files: Ye line frontend files (HTML/CSS/JS) serve karegi
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ---------------- DATABASE CONNECTION ----------------
@@ -37,7 +37,7 @@ const Contact = mongoose.model('Contact', ContactSchema);
 
 // ---------------- API ROUTES ----------------
 
-// 1. Backend Status Route (New: To see your message)
+// 1. Backend Status Route (Sirf is link par rocket message dikhega)
 app.get('/api/status', (req, res) => {
     res.send("Portfolio Backend is Running 🚀");
 });
@@ -59,7 +59,8 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// 3. Catch-all Route (Serves the Frontend index.html)
+// 3. MAIN FIX: Wildcard Route (Ye hamesha sabse niche hona chahiye)
+// Jab koi API route match nahi hoga, tabhi ye index.html serve karega
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -67,5 +68,6 @@ app.get('*', (req, res) => {
 // ---------------- START SERVER ----------------
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on Port: ${PORT}`);
-    console.log(`🔗 Check status at: http://localhost:${PORT}/api/status`);
+    console.log(`🔗 Website: http://localhost:${PORT}`);
+    console.log(`🔗 API Status: http://localhost:${PORT}/api/status`);
 });
